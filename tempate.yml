@@ -1,0 +1,141 @@
+name: {% name %}
+
+on:
+{% if on_push %}
+  push:
+    branches:
+{% for branch in branches %}
+      - {{ branch }}
+{% endfor %}
+
+    tags:
+{% for tag in tags %}
+      - {{ tag }}
+{% endfor %}
+{% endif %}
+{% if on_pull_request %}
+  pull_request:
+    paths-ignore:
+      - "**.md"
+
+{% endif %}
+jobs:
+  build:
+    strategy:
+{% if fail_fast %}
+      fail-fast: false
+{% endif %}
+      matrix:
+        os: [{% os_list %}]
+        include:
+{% if linux %}
+          - os: ubuntu-latest
+            qt_version: '6.5.0'
+            host: 'linux'
+            qt_arch: 'gcc_64'
+{% endif %}
+{% if windows %}
+          - os: windows-latest
+            qt_version: '6.5.0'
+            host: 'windows'
+            qt_arch: 'win64_msvc2019_64'
+{% endif %}
+{% if macos %}
+          - os: macos-latest
+            qt_version: '6.5.0'
+            host: 'mac'
+            qt_arch: 'clang_64'
+{% endif %}
+
+    runs-on: ${{ matrix.os }}
+    name: ${{ matrix.os }}
+
+    steps:
+      - name: Clone repo
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: {% qt_version %}
+          host: ${{ matrix.host }}
+          target: desktop
+          arch: ${{ matrix.qt_arch }}
+          install-deps: true
+
+
+      - name: Build with CMake
+        run: |
+          mkdir build
+          cd build
+          cmake ..
+          cmake --build . --config Release -j8
+
+{% if upload %}
+{% if linux %}
+      # Install CQtDeployer on Ubuntu
+      - name: Install CQtDeployer on Ubuntu
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          wget https://github.com/QuasarApp/CQtDeployer/releases/download/v1.6.2365/CQtDeployer_1.6.2365.7cce7f3_Linux_x86_64.deb
+          sudo dpkg -i CQtDeployer_1.6.2365.7cce7f3_Linux_x86_64.deb
+          sudo apt-get install -f -y
+          which cqtdeployer
+        shell: bash
+
+{% endif %}
+{% if windows %}
+      # Install CQtDeployer on Windows
+      - name: Install CQtDeployer on Windows
+        if: matrix.os == 'windows-latest'
+        run: |
+          curl -L -o CQtDeployer.zip https://github.com/QuasarApp/CQtDeployer/releases/download/v1.6.2365/CQtDeployer_1.6.2365.7cce7f3_Windows_AMD64.zip
+          7z x CQtDeployer.zip -oCQtDeployer
+          setx PATH "%PATH%;%CD%\\CQtDeployer"
+          echo %PATH%
+          echo "cqtdeployer path is: %CD%\\CQtDeployer"
+        shell: cmd
+
+{% endif %}
+{% if macos %}
+      # Install CQtDeployer on macOS
+      - name: Install CQtDeployer on macOS
+        if: matrix.os == 'macos-latest'
+        run: |
+          brew install quasarapp/tap/cqtdeployer
+          which cqtdeployer
+        shell: bash
+
+{% endif %}
+      - name: Package with CQtDeployer
+        run: |
+          mkdir output
+          cd build
+          if [ "${{ matrix.os }}" == "windows-latest" ]; then
+            ../CQtDeployer/cqtdeployer.exe -bin Release/{% binary_name %}.exe -qmlDir ../qml -qmake ${{ env.Qt6_DIR }}/bin/qmake.exe -targetDir ../output
+          else
+            cqtdeployer -bin {% binary_name %} -qmlDir ../qml -qmake ${{ env.Qt6_DIR }}/bin/qmake -targetDir ../output
+          fi
+        shell: bash
+
+      - name: Zip output
+        run: |
+          cd output
+          if [ "${{ matrix.os }}" == "windows-latest" ]; then
+            7z a -tzip ../output.zip *
+          else
+            zip -r ../output.zip *
+          fi
+        shell: bash
+
+      - name: Upload package
+        uses: svenstaro/upload-release-action@v3
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: "output.zip"
+          asset_name: ${{ matrix.os }}-qt${{ matrix.qt_version }}-build.zip
+          tag: output-${{ github.ref }}
+          overwrite: true
+{% endif %}
