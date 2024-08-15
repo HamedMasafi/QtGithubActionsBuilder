@@ -14,162 +14,192 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout_5">
+   <layout class="QVBoxLayout" name="verticalLayout_3">
     <item>
      <widget class="QSplitter" name="splitter">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
-      <widget class="QWidget" name="">
-       <layout class="QVBoxLayout" name="verticalLayout_4">
+      <widget class="QWidget" name="" native="true">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_5">
         <item>
-         <widget class="QTabWidget" name="tabWidget">
-          <property name="currentIndex">
-           <number>0</number>
+         <widget class="QScrollArea" name="scrollArea">
+          <property name="widgetResizable">
+           <bool>true</bool>
           </property>
-          <widget class="QWidget" name="tab">
-           <attribute name="title">
-            <string>General</string>
-           </attribute>
-           <layout class="QFormLayout" name="formLayout_2">
-            <item row="0" column="0">
-             <widget class="QLabel" name="label">
-              <property name="text">
-               <string>Name:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <widget class="QLineEdit" name="lineEditName">
-              <property name="text">
-               <string>Test</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="1">
-             <widget class="QComboBox" name="comboBoxQtVersion">
-              <item>
-               <property name="text">
-                <string>6.7.1</string>
-               </property>
+          <widget class="QWidget" name="scrollAreaWidgetContents">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>274</width>
+             <height>598</height>
+            </rect>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_2">
+            <item>
+             <layout class="QFormLayout" name="formLayout">
+              <item row="0" column="0">
+               <widget class="QLabel" name="label">
+                <property name="text">
+                 <string>Name:</string>
+                </property>
+               </widget>
               </item>
-              <item>
-               <property name="text">
-                <string>6.6.3</string>
-               </property>
+              <item row="0" column="1">
+               <widget class="QLineEdit" name="lineEditName">
+                <property name="text">
+                 <string>Test</string>
+                </property>
+               </widget>
               </item>
-              <item>
-               <property name="text">
-                <string>6.5.3</string>
-               </property>
+              <item row="1" column="0">
+               <widget class="QLabel" name="label_2">
+                <property name="text">
+                 <string>Binay name:</string>
+                </property>
+               </widget>
               </item>
-              <item>
-               <property name="text">
-                <string>6.4.3</string>
-               </property>
+              <item row="1" column="1">
+               <widget class="QLineEdit" name="lineEditBinaryName">
+                <property name="text">
+                 <string>MyApp</string>
+                </property>
+               </widget>
               </item>
-              <item>
-               <property name="text">
-                <string>6.3.2</string>
-               </property>
+              <item row="2" column="0">
+               <widget class="QLabel" name="label_6">
+                <property name="text">
+                 <string>Qt version:</string>
+                </property>
+               </widget>
               </item>
-              <item>
-               <property name="text">
-                <string>6.2.4</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>6.0.4</string>
-               </property>
-              </item>
-             </widget>
-            </item>
-            <item row="4" column="0">
-             <widget class="QLabel" name="label_3">
-              <property name="text">
-               <string>Target</string>
-              </property>
-             </widget>
-            </item>
-            <item row="4" column="1">
-             <widget class="QWidget" name="" native="true">
-              <layout class="QVBoxLayout" name="verticalLayout">
-               <item>
-                <widget class="QCheckBox" name="checkBoxLinux">
+              <item row="2" column="1">
+               <widget class="QComboBox" name="comboBoxQtVersion">
+                <item>
                  <property name="text">
-                  <string>Linux</string>
+                  <string>6.7.1</string>
                  </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QCheckBox" name="checkBoxWindows">
+                </item>
+                <item>
                  <property name="text">
-                  <string>Windows</string>
+                  <string>6.6.3</string>
                  </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QCheckBox" name="checkBoxMacos">
+                </item>
+                <item>
                  <property name="text">
-                  <string>Macos</string>
+                  <string>6.5.3</string>
                  </property>
-                </widget>
-               </item>
-               <item>
-                <spacer name="verticalSpacer_2">
-                 <property name="orientation">
-                  <enum>Qt::Vertical</enum>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>6.4.3</string>
                  </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>20</width>
-                   <height>40</height>
-                  </size>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>6.3.2</string>
                  </property>
-                </spacer>
-               </item>
-              </layout>
-             </widget>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>6.2.4</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>6.0.4</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QLabel" name="label_3">
+                <property name="text">
+                 <string>Target</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QWidget" name="" native="true">
+                <layout class="QVBoxLayout" name="verticalLayout">
+                 <item>
+                  <widget class="QCheckBox" name="checkBoxLinux">
+                   <property name="text">
+                    <string>Linux</string>
+                   </property>
+                   <property name="checked">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QCheckBox" name="checkBoxWindows">
+                   <property name="text">
+                    <string>Windows</string>
+                   </property>
+                   <property name="checked">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QCheckBox" name="checkBoxMacos">
+                   <property name="text">
+                    <string>Macos</string>
+                   </property>
+                   <property name="checked">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="verticalSpacer_2">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+             </layout>
             </item>
-            <item row="1" column="1">
-             <widget class="QLineEdit" name="lineEditBinaryName">
-              <property name="text">
-               <string>MyApp</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="0">
-             <widget class="QLabel" name="label_2">
-              <property name="text">
-               <string>Binay name:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="1">
+            <item>
              <widget class="QCheckBox" name="checkBoxFailFast">
               <property name="text">
                <string>Continue if one job fails</string>
               </property>
              </widget>
             </item>
-           </layout>
-          </widget>
-          <widget class="QWidget" name="tab_3">
-           <attribute name="title">
-            <string>Event</string>
-           </attribute>
-           <layout class="QFormLayout" name="formLayout_4">
-            <item row="0" column="0">
+            <item>
              <widget class="QCheckBox" name="checkBoxOnPush">
               <property name="text">
                <string>On push</string>
               </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
              </widget>
             </item>
-            <item row="1" column="0">
-             <widget class="QWidget" name="" native="true">
-              <layout class="QFormLayout" name="formLayout_3">
+            <item>
+             <widget class="QWidget" name="widgetBranchesAndTags" native="true">
+              <layout class="QFormLayout" name="formLayout_5">
+               <property name="leftMargin">
+                <number>30</number>
+               </property>
                <item row="0" column="0">
                 <widget class="QLabel" name="label_4">
                  <property name="text">
@@ -199,39 +229,19 @@ c</string>
               </layout>
              </widget>
             </item>
-            <item row="2" column="0">
+            <item>
              <widget class="QCheckBox" name="checkBoxOnPullRequest">
               <property name="text">
                <string>On pull request</string>
               </property>
              </widget>
             </item>
-           </layout>
-          </widget>
-          <widget class="QWidget" name="tab_2">
-           <attribute name="title">
-            <string>Upload</string>
-           </attribute>
-           <layout class="QVBoxLayout" name="verticalLayout_3">
             <item>
              <widget class="QCheckBox" name="checkBoxUpload">
               <property name="text">
                <string>Upload</string>
               </property>
              </widget>
-            </item>
-            <item>
-             <spacer name="verticalSpacer_3">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>20</width>
-                <height>519</height>
-               </size>
-              </property>
-             </spacer>
             </item>
            </layout>
           </widget>
@@ -263,7 +273,7 @@ c</string>
         </item>
        </layout>
       </widget>
-      <widget class="QTextBrowser" name="textBrowser">
+      <widget class="QTextBrowser" name="textBrowserBuildOutput">
        <property name="font">
         <font>
          <family>Hack</family>
@@ -290,5 +300,22 @@ c</string>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>checkBoxOnPush</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>widgetBranchesAndTags</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>51</x>
+     <y>273</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>30</x>
+     <y>341</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

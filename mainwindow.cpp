@@ -3,23 +3,23 @@
 #include "templateengine.h"
 #include "yamlhighlighter.h"
 
-QStringList generateFromCheckBoxes(QList<QPair<QCheckBox*,QString>> list)
+QStringList generateFromCheckBoxes(QList<QPair<QCheckBox *, QString>> list)
 {
     QStringList ret;
-    for (auto i: list)
+    for (auto i : list)
         if (i.first->isChecked())
-            ret<<i.second;
+            ret << i.second;
     return ret;
 }
 
-QString generateFromCheckBoxes(QList<QPair<QCheckBox*,QString>> list, const QString &sep)
+QString generateFromCheckBoxes(QList<QPair<QCheckBox *, QString>> list, const QString &sep)
 {
     return generateFromCheckBoxes(list).join(sep);
 }
 
 QStringList getFromTextEdit(QPlainTextEdit *textEdit, const QString &defaultValue = "*")
 {
-    if (textEdit->toPlainText().trimmed().isEmpty() )
+    if (textEdit->toPlainText().trimmed().isEmpty())
         return {defaultValue};
     else
         return textEdit->toPlainText().split('\n');
@@ -30,21 +30,20 @@ MainWindow::MainWindow(QWidget *parent)
 {
     setupUi(this);
 
-    YamlHighlighter *highlighter = new YamlHighlighter(textBrowser->document());
-
+    new YamlHighlighter(textBrowserBuildOutput->document());
 }
 
 MainWindow::~MainWindow() {}
 
 void MainWindow::on_pushButtonGenerate_clicked()
 {
-    auto osList = generateFromCheckBoxes({
-        {checkBoxLinux, "ubuntu-latest"},
-        {checkBoxWindows, "windows-latest"},
-        {checkBoxMacos, "macos-latest"}
-    }, ", ");
+    auto osList = generateFromCheckBoxes(
+        {{checkBoxLinux, "ubuntu-latest"},
+         {checkBoxWindows, "windows-latest"},
+         {checkBoxMacos, "macos-latest"}},
+        ", ");
 
-    TemplateEngine engine{"/doc/dev/github/QtGithubActionsBuilder/tempate.yml"};
+    TemplateEngine engine{"/doc/dev/github/QtGithubActionsBuilder/build-template.yml"};
     engine.setVariable("name", lineEditName->text());
     engine.setVariable("qt_version", comboBoxQtVersion->currentText());
     engine.setVariable("os_list", osList);
@@ -61,6 +60,5 @@ void MainWindow::on_pushButtonGenerate_clicked()
     engine.setList("branches", getFromTextEdit(plainTextEditPushBranches));
     engine.setList("tags", getFromTextEdit(plainTextEditPushTags));
 
-    textBrowser->setPlainText(engine.render());
+    textBrowserBuildOutput->setPlainText(engine.render());
 }
-
