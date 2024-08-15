@@ -92,8 +92,7 @@ void MainWindow::on_pushButtonSaveAs_clicked()
     auto fileName
         = QFileDialog::getSaveFileName(this, "Save as", {}, "Yml files (*.yml);; All files (*)");
 
-    if (!fileName.isEmpty())
-    {
+    if (!fileName.isEmpty()) {
         QFile f{fileName};
         if (!f.open(QIODevice::WriteOnly))
             return;
@@ -105,4 +104,3 @@ void MainWindow::on_pushButtonSaveAs_clicked()
         pushButtonSave->setEnabled(true);
     }
 }
-

@@ -1,10 +1,10 @@
 #ifndef TEMPLATEENGINE_H
 #define TEMPLATEENGINE_H
 
-#include <QString>
-#include <QStringList>
 #include <QMap>
 #include <QStack>
+#include <QString>
+#include <QStringList>
 
 class TemplateEngine
 {
@@ -17,7 +17,8 @@ public:
     QString render();
 
 private:
-    struct LoopData {
+    struct LoopData
+    {
         int startLine;
         QString variableName;
         QString currentValue;
@@ -31,13 +32,11 @@ private:
     bool processForLoop(const QString &line, int &lineIndex, const QStringList &lines);
     bool processEndFor(const QString &line, int &lineIndex);
     QString replacePlaceholders(const QString &line);
-    QString replaceVariable(const QString &line,
-                            const QString &name,
-                            const QString &value,
-                            bool *ok = nullptr) const;
+    QString replaceVariable(
+        const QString &line, const QString &name, const QString &value, bool *ok = nullptr) const;
 
     QString m_templateFilePath;
-    QStack<LoopData*> m_loopStack;
+    QStack<LoopData *> m_loopStack;
     QMap<QString, QString> m_variables;
     QMap<QString, bool> m_conditions;
     QMap<QString, QStringList> m_lists;

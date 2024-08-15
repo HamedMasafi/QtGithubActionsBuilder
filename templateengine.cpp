@@ -161,10 +161,8 @@ QString TemplateEngine::replacePlaceholders(const QString &line)
     return result;
 }
 
-QString TemplateEngine::replaceVariable(const QString &line,
-                                        const QString &name,
-                                        const QString &value,
-                                        bool *ok) const
+QString TemplateEngine::replaceVariable(
+    const QString &line, const QString &name, const QString &value, bool *ok) const
 {
     QString result = line;
     QRegularExpression variableRegex(R"(\{\{\s*)" + name + R"(\s*\}\})");
