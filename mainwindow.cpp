@@ -3,6 +3,9 @@
 #include "templateengine.h"
 #include "yamlhighlighter.h"
 
+#include <QFileDialog>
+#include <QSettings>
+
 QStringList generateFromCheckBoxes(QList<QPair<QCheckBox *, QString>> list)
 {
     QStringList ret;
@@ -31,9 +34,17 @@ MainWindow::MainWindow(QWidget *parent)
     setupUi(this);
 
     new YamlHighlighter(textBrowserBuildOutput->document());
+
+    QSettings s;
+    if (s.contains("splitter"))
+        splitter->restoreState(s.value("splitter").toByteArray());
 }
 
-MainWindow::~MainWindow() {}
+MainWindow::~MainWindow()
+{
+    QSettings s;
+    s.setValue("splitter", splitter->saveState());
+}
 
 void MainWindow::on_pushButtonGenerate_clicked()
 {
@@ -61,4 +72,37 @@ void MainWindow::on_pushButtonGenerate_clicked()
     engine.setList("tags", getFromTextEdit(plainTextEditPushTags));
 
     textBrowserBuildOutput->setPlainText(engine.render());
+
+    setWindowModified(true);
 }
+
+void MainWindow::on_pushButtonSave_clicked()
+{
+    QFile f{windowFilePath()};
+    if (!f.open(QIODevice::WriteOnly))
+        return;
+    f.write(textBrowserBuildOutput->toPlainText().toUtf8());
+    f.close();
+
+    setWindowModified(false);
+}
+
+void MainWindow::on_pushButtonSaveAs_clicked()
+{
+    auto fileName
+        = QFileDialog::getSaveFileName(this, "Save as", {}, "Yml files (*.yml);; All files (*)");
+
+    if (!fileName.isEmpty())
+    {
+        QFile f{fileName};
+        if (!f.open(QIODevice::WriteOnly))
+            return;
+        f.write(textBrowserBuildOutput->toPlainText().toUtf8());
+        f.close();
+
+        setWindowFilePath(fileName);
+        setWindowModified(false);
+        pushButtonSave->setEnabled(true);
+    }
+}
+

@@ -13,4 +13,6 @@ public:
     ~MainWindow();
 private slots:
     void on_pushButtonGenerate_clicked();
+    void on_pushButtonSave_clicked();
+    void on_pushButtonSaveAs_clicked();
 };
